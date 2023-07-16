@@ -17,7 +17,6 @@ export default function Dashboard() {
     setPage(page);
   };
   const changeTheSearch = (event) => {
-    // console.log(event.target.value);
     setSearch(event.target.value);
   };
 
@@ -44,7 +43,6 @@ export default function Dashboard() {
   };
 
   const getSearchedMovies = () => {
-    // console.log(SEARCHAPI + search)
     const options = {
       method: "GET",
       headers: {
@@ -76,9 +74,6 @@ export default function Dashboard() {
       getAllMovies();
     } else {
       getSearchedMovies();
-    }
-    if(movies.length == 0){
-
     }
   }, [search, totalPages, page]);
   return (
@@ -113,15 +108,22 @@ export default function Dashboard() {
                     key={product.id}
                     className="group relative rounded-md	 p-2 border-solid   border-2 border-gray-200"
                   >
-                    <div className="aspect-h-4 aspect-w-3   overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:scale-110 lg:h-80">
-                      <img
-                        src={
-                          "https://image.tmdb.org/t/p/w500" +
-                          product.poster_path
-                        }
-                        alt={product.title}
-                        className="h-full object-fill w-full  object-center lg:h-full lg:w-full"
-                      />
+                    <div className=" overflow-hidden rounded-md bg-gray-200  group-hover:scale-110 lg:h-80">
+                      <div className="group relative">
+                        <img
+                          src={
+                            "https://image.tmdb.org/t/p/w500" +
+                            product.poster_path
+                          }
+                          alt={product.title}
+                          className="h-full object-fill w-full object-center lg:h-full lg:w-full"
+                        />
+                        <div className="opacity-0 bg-opacity-60 bg-gray-500 p-1 text-white overflow-hidden absolute inset-0  flex items-center group-hover:opacity-100">
+                          <div>
+                            <p className="text-sm">{product.overview}</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div className="mt-4 flex justify-between">
                       <div>
