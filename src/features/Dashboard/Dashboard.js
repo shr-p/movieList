@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import {
+  ArrowPathIcon,
   CalendarIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ExclamationTriangleIcon,
+  FilmIcon,
   StarIcon,
   UserIcon,
 } from "@heroicons/react/20/solid";
-import { getMovies, getSearchedMovies } from "../API";
+import { getActors, getMovies, getSearchedMovies } from "../API";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
+  const [searchedMovies, setSearchedMovies] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const handlePage = (page) => {
@@ -19,9 +24,10 @@ export default function Dashboard() {
   const changeTheSearch = (event) => {
     setSearch(event.target.value);
   };
-
+  
   useEffect(() => {
     setMovies([]);
+    setSearchedMovies(true);
     if (search.length === 0) {
       Promise.resolve(getMovies(page)).then((values) => {
         setMovies(values.results);
@@ -34,36 +40,42 @@ export default function Dashboard() {
         setTotalPages(values.total_pages);
         setPage(values.page);
       });
+      if (movies.length === 0) {
+        setTimeout(() => {
+          setSearchedMovies(false);
+        }, 2000);
+      }
     }
   }, [search, totalPages, page]);
   return (
     <>
       <div className="space-y-12 bg-gradient-to-tl from-indigo-200 via-red-200 to-yellow-100 p-12">
         <div className="">
+         
           <label
             htmlFor="title"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            <h2 className="text-2xl">Search your favourite movies....</h2>
+            className="block  text-sm font-medium leading-6 text-gray-900"
+          > <FilmIcon className="w-7 h-7 inline mb-2"></FilmIcon>
+            <h2 className="text-2xl inline "> Search your favourite movies....</h2>
           </label>
-          <div className="mt-2">
-            <div className="flex rounded-md bg-white shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-              <input
-                type="text"
-                id="title"
-                onChange={changeTheSearch}
-                autoComplete="title"
-                placeholder="Search for you favourite movie"
-                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-              />
-            </div>
+          <div className="flex  rounded-md bg-white shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+            <input
+              type="text"
+              id="title"
+              onChange={changeTheSearch}
+              autoComplete="title"
+              placeholder="Search for you favourite movie"
+              className="block col-span-2 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+            />
           </div>
         </div>
+
         <div className="">
-          <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+          <div className=" max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
             <div className="grid grid-cols-1  gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 xl:gap-x-8">
               {movies.length > 0 ? (
                 movies.map((movie) => (
+                  <Link to={`/${movie.id}`} >
                   <div
                     key={movie.id}
                     className="group relative rounded-md	 p-2 border-solid   border-2 border-gray-200"
@@ -115,28 +127,9 @@ export default function Dashboard() {
                       </div>
                     </div>
                   </div>
+                  </Link>
                 ))
-              ) : (
-                // <div className="justify-center col-span-4 ">
-
-                //   <h3 className="text-sm block justify-center font-medium text-center text-2xl my-8 text-gray-700">
-                //     Sorry..,
-
-                //   </h3>
-                //   <h3 className="text-sm block justify-center font-medium text-center text-2xl my-8 text-gray-700">
-                //     MOVIE
-
-                //   </h3>
-                //   <h3 className="text-sm block justify-center font-medium text-center text-2xl my-8 text-gray-700">
-                //     NOT FOUND
-
-                //   </h3>
-                //   <h3 className="text-sm block justify-center font-medium text-center text-2xl my-8 text-gray-700">
-                //    Re-Try
-                //     <ArrowPathIcon className="w-5 h-5 inline m-1"></ArrowPathIcon>
-                //   </h3>
-
-                // </div>
+              ) : searchedMovies === true ? (
                 <div className="text-center col-span-4">
                   <div role="status">
                     <svg
@@ -156,6 +149,21 @@ export default function Dashboard() {
                       />
                     </svg>
                     <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+              ) : (
+                <div class="col-span-4 bg-white dark:bg-gray-900 ">
+                  <div class="container px-6 py-12 mx-auto lg:flex lg:items-center lg:gap-12">
+                    <div class="">
+                      <ExclamationTriangleIcon className="w-5 h-5 inline m-1"></ExclamationTriangleIcon>
+                      
+                      <h1 class="mt-3 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
+                        Movie not found
+                      </h1>
+                      <p class="mt-4 text-gray-500 dark:text-gray-400">
+                        Sorry, the movie you are looking for doesn't exist.
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}

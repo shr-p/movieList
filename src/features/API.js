@@ -15,6 +15,42 @@ export function getMovies(page) {
       resolve(data);
     });
   }
+export function getActors(id) {
+    return new Promise(async (resolve) => {
+      const response = await fetch(
+        "https://api.themoviedb.org/3/movie/"+id+"/credits"
+      , {
+        method: "GET",
+        body: JSON.stringify(),
+        headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTc2OTZhMzMwODEwNDkyZWZmM2JlM2QzZWFhOGZhYSIsInN1YiI6IjY0YjIzOGQyMjNkMjc4MDEwNzMwMWRkNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.L2VTHwO3eVYaP37OH-P_3YTcZUbEn_FijvHXNsITnLQ",
+          },
+      });
+      const data = await response.json();
+      // TODO: on server it will only return some info of user (not password)
+      resolve(data);
+    });
+  }
+export function getOneMovie(id) {
+    return new Promise(async (resolve) => {
+      const response = await fetch(
+        "https://api.themoviedb.org/3/movie/"+id
+      , {
+        method: "GET",
+        body: JSON.stringify(),
+        headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTc2OTZhMzMwODEwNDkyZWZmM2JlM2QzZWFhOGZhYSIsInN1YiI6IjY0YjIzOGQyMjNkMjc4MDEwNzMwMWRkNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.L2VTHwO3eVYaP37OH-P_3YTcZUbEn_FijvHXNsITnLQ",
+          },
+      });
+      const data = await response.json();
+      // TODO: on server it will only return some info of user (not password)
+      resolve(data);
+    });
+  }
 export function getSearchedMovies(search, page) {
     return new Promise(async (resolve) => {
       const response = await fetch( "https://api.themoviedb.org/3/search/movie?query=" +
