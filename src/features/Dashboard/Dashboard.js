@@ -69,14 +69,14 @@ export default function Dashboard() {
             />
           </div>
           {/* Drop  Down */}
-          <div>
-            {
-              movies.length > 0 ? (
-              movies.map((movie) => (
-                <><h1>{movie.title}</h1><h1>{movie.popularity}</h1></>
-              ))) : null
-            }
-          </div>
+          // <div>
+          //   {
+          //     movies.length > 0 ? (
+          //     movies.map((movie) => (
+          //       <><h1>{movie.title}</h1><h1>{movie.popularity}</h1></>
+          //     ))) : null
+          //   }
+          // </div>
         </div>
 
         <div className="">
