@@ -68,15 +68,6 @@ export default function Dashboard() {
               className="block col-span-2 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
             />
           </div>
-          {/* Drop  Down */}
-          // <div>
-          //   {
-          //     movies.length > 0 ? (
-          //     movies.map((movie) => (
-          //       <><h1>{movie.title}</h1><h1>{movie.popularity}</h1></>
-          //     ))) : null
-          //   }
-          // </div>
         </div>
 
         <div className="">
